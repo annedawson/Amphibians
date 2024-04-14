@@ -1,6 +1,8 @@
 package net.annedawson.amphibians
 
 import android.app.Application
+import net.annedawson.amphibians.data.AppContainer
+import net.annedawson.amphibians.data.DefaultAppContainer
 
 class AmphibiansApplication : Application(){
 
@@ -14,5 +16,13 @@ class AmphibiansApplication : Application(){
 
     // NOTE: AmphibiansApplication is the
     // Application name in the manifest file
+
+    lateinit var container: AppContainer
+    override fun onCreate() {
+        super.onCreate()
+        container = DefaultAppContainer()
+    }
+
+
 
 }
