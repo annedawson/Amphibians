@@ -17,26 +17,26 @@ package net.annedawson.amphibians.data
  */
 
 
-import net.annedawson.amphibians.model.MarsPhoto
-import net.annedawson.amphibians.network.MarsApiService
+import net.annedawson.amphibians.model.AmphibiansPhoto
+import net.annedawson.amphibians.network.AmphibiansApiService
 
 /**
- * Repository that fetch mars photos list from marsApi.
+ * Repository that fetch amphibians photos list from amphibiansApi.
  */
-interface MarsPhotosRepository {
-    /** Fetches list of MarsPhoto from marsApi */
-    suspend fun getMarsPhotos(): List<MarsPhoto>
+interface AmphibiansPhotosRepository {
+    /** Fetches list of AmphibiansPhoto from AmphibiansApiService */
+    suspend fun getAmphibiansPhotos(): List<AmphibiansPhoto>
     // the above is an abstract function that needs implementing
     // by overriding - see below
 }
 
 /**
  * Network Implementation of Repository that fetch
- * mars photos list from marsApi.
+ * amphibians photos list from amphibiansApi.
  */
-class NetworkMarsPhotosRepository(
-    private val marsApiService: MarsApiService
-) : MarsPhotosRepository {
-    /** Fetches list of MarsPhoto from marsApi*/
-    override suspend fun getMarsPhotos(): List<MarsPhoto> = marsApiService.getPhotos()
+class NetworkAmphibiansPhotosRepository(
+    private val amphibiansApiService: AmphibiansApiService
+) : AmphibiansPhotosRepository {
+    /** Fetches list of AmphibiansPhoto from amphibiansApi*/
+    override suspend fun getAmphibiansPhotos(): List<AmphibiansPhoto> = amphibiansApiService.getPhotos()
 }

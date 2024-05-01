@@ -27,8 +27,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import net.annedawson.amphibians.AmphibiansApplication
-import net.annedawson.amphibians.data.MarsPhotosRepository
-import net.annedawson.amphibians.model.MarsPhoto
+import net.annedawson.amphibians.data.AmphibiansPhotosRepository
+import net.annedawson.amphibians.model.AmphibiansPhoto
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -38,93 +38,94 @@ import java.io.IOException
  * At any one time it can only be one of the three values
  * Success, Error, Loading
  */
-sealed interface MarsUiState {
-    //data class Success(val photos:  MarsPhoto) : MarsUiState
+sealed interface AmphibiansUiState {
+    //data class Success(val photos:  AmphibiansPhoto) : AmphibiansUiState
 
-    //The Success data class represents a successful state in the MarsPhotos app,
+    //The Success data class represents a successful state in the Amphibians app,
     // where the list of photos has been successfully retrieved from the API.
-    // It has a single property called photos, which is a list of MarsPhoto objects.
-    data class Success(val photos: List<MarsPhoto>) : MarsUiState
-    // Represents a successful retrieval of Mars photos.
+    // It has a single property called photos, which is a list of AmphibiansPhoto objects.
+    data class Success(val photos: List<AmphibiansPhoto>) : AmphibiansUiState
+    // Represents a successful retrieval of Amphibians photos.
     // The original starter code stored the retrieved photos
     // as a long String of JSON key, value pairs and displayed
     // that in the HomeScreen.
-    // Later the code was amended in MarsViewModel.kt
-    // to read the data into a list of MarsPhoto.
+    // Later the code was amended in AmphibiansViewModel.kt
+    // to read the data into a list of AmphibiansPhoto.
     // The length of the list is displayed in a string using string formatting.
-    // In the final version of the app, the list of actual Mars photos
-    // is displayed in a grid.
+    // In this the final version of the app, the list of actual Amphibians photos and details
+    // will be displayed in a list.
 
 
-    //The Error object represents an error state in the MarsPhotos app,
+    //The Error object represents an error state in the Amphibians app,
     // where there was an error retrieving the photos from the API.
-    object Error : MarsUiState
+    object Error : AmphibiansUiState
     // Signifies an error during the photo fetching process.
     // Doesn't hold additional data, but its presence indicates a problem.
-    object Loading : MarsUiState
+    object Loading : AmphibiansUiState
     // Indicates that photos are currently being fetched.
     // Used to display loading indicators or messages to the user.
 }
 
-// you can't instantiate the MarsUiState interface,
-// but you can instantiate a MarsUiState.Success object e.g.
-// MarsUiState.Success(marsPhotosRepository.getMarsPhotos()),
-// or a MarsUiState.Error or a MarsUiState.Loading object
+// you can't instantiate the AmphibiansUiState interface,
+// but you can instantiate a AmphibiansUiState.Success object e.g.
+// AmphibiansUiState.Success(amphibiansPhotosRepository.getAmphibiansPhotos()),
+// or a AmphibiansUiState.Error or a AmphibiansUiState.Loading object
 
-class MarsViewModel(private val marsPhotosRepository: MarsPhotosRepository) : ViewModel() {
+class AmphibiansViewModel(private val amphibiansPhotosRepository: AmphibiansPhotosRepository) : ViewModel() {
     // This is dependency injection, injecting the repository dependency
 
     /** The mutable State that stores the status of the most recent request */
-    var marsUiState: MarsUiState by mutableStateOf(MarsUiState.Loading)
+    var amphibiansUiState: AmphibiansUiState by mutableStateOf(AmphibiansUiState.Loading)
         private set
 
     /**
-     * Call getMarsPhotos() on init so we can display status immediately.
+     * Call getAmphibiansPhotos() on init so we can display status immediately.
      */
     init {
-        getMarsPhotos()
+        getAmphibiansPhotos()
     }
 
     /**
-     * Gets Mars photos information from the Mars API Retrofit service
+     * Gets Amphibians photos information from the Amphibians API Retrofit service
      * and updates the
-     * [MarsPhoto] [List] [MutableList].
+     * [AmphibiansPhoto] [List] [MutableList].
      */
-    fun getMarsPhotos() {
+    fun getAmphibiansPhotos() {
         viewModelScope.launch {
-            marsUiState = MarsUiState.Loading
-            marsUiState = try { // possible network access exception
-                //val result = marsPhotosRepository.getMarsPhotos()[0]
-                //MarsUiState.Success(marsPhotosRepository.getMarsPhotos()[0])
+            amphibiansUiState = AmphibiansUiState.Loading
+            amphibiansUiState = try { // possible network access exception
+                //val result = amphibiansPhotosRepository.getAmphibiansPhotos()[0]
+                //AmphibiansUiState.Success(amphibiansPhotosRepository.getAmphibiansPhotos()[0])
                 /*
                 In the line of code below, in the case of a successful response,
-                you receive Mars photo information from the server.
+                you receive Amphibians photo information from the server.
+
                 In order to store the data, add a constructor parameter
                 to the Success data class for the property.
                  */
-                MarsUiState.Success(marsPhotosRepository.getMarsPhotos())
+                AmphibiansUiState.Success(amphibiansPhotosRepository.getAmphibiansPhotos())
             } catch (e: IOException) {
-                MarsUiState.Error
+                AmphibiansUiState.Error
             } catch (e: HttpException) {
-                MarsUiState.Error
+                AmphibiansUiState.Error
             }
         }
     }
 
     /**
-     * Factory for [MarsViewModel]
-     * that takes [MarsPhotosRepository] as a dependency
+     * Factory for [AmphibiansViewModel]
+     * that takes [AmphibiansPhotosRepository] as a dependency
      */
 
-    // This is the definition of Factory. It is used in MarsPhotosApp
+    // This is the definition of Factory. It is used in AmphibiansPhotosApp
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = (this[APPLICATION_KEY] as AmphibiansApplication)
-                val marsPhotosRepository = application.container.marsPhotosRepository
-                MarsViewModel(marsPhotosRepository = marsPhotosRepository)
+                val amphibiansPhotosRepository = application.container.amphibiansPhotosRepository
+                AmphibiansViewModel(amphibiansPhotosRepository = amphibiansPhotosRepository)
             }
-            // this is how the ViewModel is created in MarsPhotosApp using Factory
+            // this is how the ViewModel is created in AmphibiansPhotosApp using Factory
 
 
         }

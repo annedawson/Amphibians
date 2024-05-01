@@ -21,11 +21,11 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * This data class defines a Mars photo
+ * This data class defines an Amphibians photo
  * which includes an ID, and the image URL.
  */
 @Serializable
-data class MarsPhoto(
+data class AmphibiansPhoto(
     val id: String,
     @SerialName(value = "img_src")
     val imgSrc: String

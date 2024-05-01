@@ -83,6 +83,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation(libs.androidx.junit.ktx)
     //implementation("androidx.compose.material3:material3-android:1.2.0")
 
     testImplementation("junit:junit:4.13.2")

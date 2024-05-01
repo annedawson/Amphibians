@@ -17,7 +17,7 @@ package net.annedawson.amphibians.data
  */
 
 
-import net.annedawson.amphibians.network.MarsApiService
+import net.annedawson.amphibians.network.AmphibiansApiService
 import retrofit2.Retrofit
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
@@ -27,7 +27,7 @@ import okhttp3.MediaType.Companion.toMediaType
  * Dependency Injection container *** at the application level***.
  */
 interface AppContainer {
-    val marsPhotosRepository: MarsPhotosRepository
+    val amphibiansPhotosRepository: AmphibiansPhotosRepository
 }
 
 /**
@@ -49,8 +49,8 @@ class DefaultAppContainer : AppContainer {
     /**
      * Retrofit service object for creating api calls
      */
-    private val retrofitService: MarsApiService by lazy {
-        retrofit.create(MarsApiService::class.java)
+    private val retrofitService: AmphibiansApiService by lazy {
+        retrofit.create(AmphibiansApiService::class.java)
     }
 
     /*
@@ -61,10 +61,10 @@ class DefaultAppContainer : AppContainer {
     */
 
     /**
-     * DI implementation for Mars photos repository
+     * DI implementation for Amphibians photos repository
      */
-    override val marsPhotosRepository: MarsPhotosRepository by lazy {
-        NetworkMarsPhotosRepository(retrofitService)
+    override val amphibiansPhotosRepository: AmphibiansPhotosRepository by lazy {
+        NetworkAmphibiansPhotosRepository(retrofitService)
     }
 }
 

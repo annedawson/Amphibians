@@ -24,7 +24,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import net.annedawson.amphibians.ui.MarsPhotosApp
+import net.annedawson.amphibians.ui.AmphibiansPhotosApp
 import net.annedawson.amphibians.ui.theme.AmphibiansTheme
 
 class MainActivity : ComponentActivity() {
@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    MarsPhotosApp()
+                    AmphibiansPhotosApp()
                 }
             }
         }

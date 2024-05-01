@@ -18,15 +18,15 @@ package net.annedawson.amphibians.network
 
 
 
-import  net.annedawson.amphibians.model.MarsPhoto
+import  net.annedawson.amphibians.model.AmphibiansPhoto
 import retrofit2.http.GET
 
 /**
  * A public interface that exposes the [getPhotos] method
  */
-interface MarsApiService {
+interface AmphibiansApiService {
     /**
-     * Returns a [List] of [MarsPhoto] and
+     * Returns a [List] of [AmphibiansPhoto] and
      * this method can be called from a Coroutine.
      * The @GET annotation indicates that
      * the "photos" endpoint will be requested with the GET
@@ -38,6 +38,6 @@ interface MarsApiService {
     // the BASE_URL to get the absolute URL of the photos data
     // the function just returns the list of photos
 
-    suspend fun getPhotos(): List<MarsPhoto>
+    suspend fun getPhotos(): List<AmphibiansPhoto>
     // overridden in the repository
 }

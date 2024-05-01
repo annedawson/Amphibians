@@ -47,23 +47,23 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import net.annedawson.amphibians.R
-import net.annedawson.amphibians.model.MarsPhoto
+import net.annedawson.amphibians.model.AmphibiansPhoto
 import net.annedawson.amphibians.ui.theme.AmphibiansTheme
 
 @Composable
 fun HomeScreen(
-    marsUiState: MarsUiState,
+    amphibiansUiState: AmphibiansUiState,
     retryAction: () -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
-    when (marsUiState) {
-        is MarsUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
-        //is MarsUiState.Success -> MarsPhotoCard(photo = marsUiState.photos, modifier = modifier.fillMaxSize())
-        is MarsUiState.Success -> PhotosGridScreen(
-            marsUiState.photos, contentPadding = contentPadding, modifier = modifier.fillMaxWidth()
+    when (amphibiansUiState) {
+        is AmphibiansUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
+        //is AmphibiansUiState.Success -> AmphibiansPhotoCard(photo = amphibiansUiState.photos, modifier = modifier.fillMaxSize())
+        is AmphibiansUiState.Success -> PhotosGridScreen(
+            amphibiansUiState.photos, contentPadding = contentPadding, modifier = modifier.fillMaxWidth()
         )
-        is MarsUiState.Error -> ErrorScreen(retryAction, modifier = modifier.fillMaxSize())
+        is AmphibiansUiState.Error -> ErrorScreen(retryAction, modifier = modifier.fillMaxSize())
     }
 }
 
@@ -113,7 +113,7 @@ fun ResultScreen(photos: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun MarsPhotoCard(photo: MarsPhoto, modifier: Modifier = Modifier) {
+fun AmphibiansPhotoCard(photo: AmphibiansPhoto, modifier: Modifier = Modifier) {
 
     Card(
         modifier = modifier,
@@ -128,7 +128,7 @@ fun MarsPhotoCard(photo: MarsPhoto, modifier: Modifier = Modifier) {
                 .build(),
             error = painterResource(R.drawable.ic_broken_image),
             placeholder = painterResource(R.drawable.loading_img),
-            contentDescription = stringResource(R.string.mars_photo),
+            contentDescription = stringResource(R.string.amphibians_photo),
             contentScale = ContentScale.Crop, // fills the entire screen
             modifier = Modifier.fillMaxWidth()
         )
@@ -141,7 +141,7 @@ fun MarsPhotoCard(photo: MarsPhoto, modifier: Modifier = Modifier) {
  */
 @Composable
 fun PhotosGridScreen(
-    photos: List<MarsPhoto>,
+    photos: List<AmphibiansPhoto>,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
@@ -151,7 +151,7 @@ fun PhotosGridScreen(
         contentPadding = contentPadding,
     ) {
         items(items = photos, key = { photo -> photo.id }) { photo ->
-            MarsPhotoCard(
+            AmphibiansPhotoCard(
                 photo,
                 modifier = modifier
                     .padding(4.dp)
@@ -182,7 +182,7 @@ fun ErrorScreenPreview() {
 @Composable
 fun PhotosGridScreenPreview() {
     AmphibiansTheme {
-        val mockData = List(10) { MarsPhoto("$it", "") }
+        val mockData = List(10) { AmphibiansPhoto("$it", "") }
         PhotosGridScreen(mockData)
     }
 }
